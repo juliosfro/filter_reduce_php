@@ -84,6 +84,30 @@ function orderByDescIdade($acumulador, $atual)
 }
 
 uasort($pessoas, 'orderByDescIdade');
+$idadeByDesc = array();
+
 foreach ($pessoas as $value) {
+    array_push($idadeByDesc, $value);
+}
+
+foreach ($idadeByDesc as $value) {
     echo "Nome: " . $value['nome'] . ' - ' . "Idade: " . $value['idade'] . " anos. \n";
 }
+
+echo "------------------------------------\n";
+echo "As duas pessoas mais velhas se chamam: \n";
+for ($i = 0; $i < 2; $i++) {
+    echo $i + 1 . '. ' . $idadeByDesc[$i]['nome'] . ' - ' . $idadeByDesc[$i]['idade'] . " anos.\n";
+}
+
+echo "------------------------------------\n";
+$maioresDeIdade = array_filter(array_map(function ($x) {
+    if ($x['idade'] > 18) return $x;
+}, $pessoas));
+
+$menoresDeIdade = array_filter(array_map(function ($x) {
+    if ($x['idade'] < 18) return $x;
+}, $pessoas));
+
+echo "Quantidade de maiores de idade: " . count($maioresDeIdade) . "\n";
+echo "Quantidade de menores de idade: " . count($menoresDeIdade) . "\n";
