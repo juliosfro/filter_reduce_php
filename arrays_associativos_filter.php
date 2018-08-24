@@ -1,4 +1,5 @@
 <?php
+// Array associativo de pessoas.
 $pessoas = [
     ['nome' => 'Julio', 'idade' => 26],
     ['nome' => 'Ana Paula', 'idade' => 19],
@@ -7,10 +8,12 @@ $pessoas = [
     ['nome' => 'Sabrina', 'idade' => 17]
 ];
 
+// Filtrando apenas as pessoas que são maiores de idade.
 $maioresDeIdade = array_filter($pessoas, function ($p) {
     return $p['idade'] > 18;
 });
 
+// Filtrando apenas as pessoas que são menores de idade.
 $menoresDeIdade = array_filter($pessoas, function ($p) {
     return $p['idade'] < 18;
 });
@@ -27,36 +30,43 @@ foreach ($menoresDeIdade as $value) {
     echo "Nome: " . $value['nome'] . ' - ' . "Idade: " . $value['idade'] . " anos.\n";
 }
 
+// Somando as idades de todas as pessoas que são de menor.
 $totalIdadeMenores = array_reduce($menoresDeIdade, function ($acumulador, $x) {
     $acumulador += $x['idade'];
     return $acumulador;
 });
 
+// Calculando a média da idade das pessoas que são de menor.
 $mediaIdadeMenores = $totalIdadeMenores / count($menoresDeIdade);
 
 echo "------------------------------------\n";
 echo "A média da idade dos menores de idade é: ";
 echo number_format($mediaIdadeMenores, 2, '.', '.') . " anos.\n";
 
+// Somando a idade das pessoas que são maiores de idade.
 $totalIdadeMaiores = array_reduce($maioresDeIdade, function ($acumulador, $x) {
     $acumulador += $x['idade'];
     return $acumulador;
 });
 
+// Calculando a média da idade das pessoas que são de maior.
 $mediaIdadeMaiores = $totalIdadeMaiores / count($maioresDeIdade);
 echo "A média da idade dos maiores de idade é: ";
 echo number_format($mediaIdadeMaiores, 2, '.', '.') . " anos.\n";
 
-//Para ordenar os nomes em ordem alfabética
+// Ordenando os nomes das pessoas em ordem alfabética.
 function orderByAscNome($acumulador, $atual)
 {
     return $acumulador['nome'] > $atual['nome'];
 }
 
+// Usando a função uasort que está chamando a função de call-back para ordenar o array de pessoas.
 uasort($pessoas, 'orderByAscNome');
 
 echo "------------------------------------\n";
 echo "Nomes em ordem alfabética: \n";
+
+// Imprimindo a lista de nomes em ordem alfabética.
 foreach ($pessoas as $value) {
     echo $value['nome'] . "\n";
 }
@@ -101,10 +111,13 @@ for ($i = 0; $i < 2; $i++) {
 }
 
 echo "------------------------------------\n";
+
+// Podemos usar a função filter combinada com a função map.
 $maioresDeIdade = array_filter(array_map(function ($x) {
     if ($x['idade'] > 18) return $x;
 }, $pessoas));
 
+// Usando a função filter combinada com a função map para retornar as pessoas que são menores de idade.
 $menoresDeIdade = array_filter(array_map(function ($x) {
     if ($x['idade'] < 18) return $x;
 }, $pessoas));
